@@ -38,13 +38,15 @@ for link in soup.find_all('a'):
 def to_title(link):
     return ''.join([str(s) for s in link.contents]).replace('<font color="darkblue">', '').replace('</font>','')
 
-print('peliculas encontradas')
-for film in films:
-    print(to_title(film))
+if len(films) > 0:
+    print('Peliculas encontradas:')
+    for i, film in enumerate(films):
+        print(' [{}] {}'.format(i, to_title(film)))
 
-print('series encontradas')
-for serie in series:
-    print(to_title(serie))
+if len(series) > 0:
+    print('Series encontradas:')
+    for i, serie in enumerate(series):
+        print(' [{}] {}'.format(i, to_title(serie)))
     
 #print(soup.prettify())
 
