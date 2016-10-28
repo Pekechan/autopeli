@@ -76,7 +76,31 @@ else:
     print('Opcion no valida')
     sys.exit(1)
     
+
+
+if op_type == 's':
+    chapters = []
+    page = request_url('http://www.mejortorrent.com' + url)
+    for link in page.find_all('a'):
+        href = link.get('href')
+        if href is not None and href.startswith('/serie-episodio-'):
+            chapters.append(link)
+    print('Capitulos encontrados:')
+    for i, chapter in enumerate(chapters):
+        print(' [{}] {}'.format(i, to_title(chapter)))
+    op = input('Seleccione una opcion: ')
+    
+    try:
+        op_index = int(op)     
+    except:
+        print('Entrada no valida')
+        sys.exit(1)
+    if op_index < len(chapters) and op_index >=0:
+        url = chapters[op_index].get('href')
+
 page = request_url('http://www.mejortorrent.com' + url)
+
+
 links = page.findAll('a', text='Descargar')
 
 if len(links) == 0:
@@ -95,7 +119,12 @@ url = 'http://www.mejortorrent.com' + links[0].get('href')
 
 urllib.request.urlretrieve(url, '/home/pi/Downloads/autopeli.torrent')
 
-import ipdb; ipdb.set_trace()
+print('Torrent descargado con exito')
+
+
+
+
+#import ipdb; ipdb.set_trace()
 
 
     
